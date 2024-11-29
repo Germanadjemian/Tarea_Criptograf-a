@@ -52,7 +52,7 @@ def encriptado_1(frase):
     resultado = "".join(lista_2)
     return resultado
 
-def letra_mas_repetida(texto):
+def letra_mas_repetida(texto):#Devuelve la letra más repetida y también las veces que esta se repite
     contador = {}  # Diccionario para contar las letras y los espacios
     
     for letra in texto:
@@ -65,6 +65,17 @@ def letra_mas_repetida(texto):
     letra_mas_frecuente = max(contador, key=contador.get)
     frecuencia = contador[letra_mas_frecuente]
     return letra_mas_frecuente, frecuencia
+
+def posiciones_letra(frase, letra):
+    lista = []
+    cont= 0
+    for caracter in frase:
+        if caracter == letra:
+            lista.append(cont)
+        cont+=1
+    return lista
+
+
 
 #Resultado de la concersión entre letras y números
 print("Estos son los números correspondientes para cada letra de la frase, de la primera a la última:")
@@ -79,6 +90,9 @@ print()
 
 print("La letra que más se repetía en la frase original era:")
 print(letra_mas_repetida(frase))
+print("En las posiciones: " + str(posiciones_letra(frase, letra_mas_repetida(frase)[0])))
+
 print("La letra que más se repite luego de encriptada la frase es:")
 print(letra_mas_repetida(primera_encriptacion))
-
+print("En las posiciones: " + str(posiciones_letra(primera_encriptacion, letra_mas_repetida(primera_encriptacion)[0])))
+#Podemos observar que el número de veces que se repite y las posiciones no cambian

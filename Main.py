@@ -26,7 +26,7 @@ def eliminar_tildes(texto):
     # Convertimos los caracteres acentuados a su forma base y eliminamos lo restante.
     return texto_normalizado.encode('ASCII', 'ignore').decode('ASCII')
 
-# Función que convierte cada letra en un índice numérico según un alfabeto definido.
+# Función que convierte cada letra en un índice numérico según un alfabeto definido (el que se nos da en la tarea y aca representamos con la variable alafabeto).
 def letra_numero(texto):
     """
     Convierte cada letra del texto en su índice correspondiente en un alfabeto personalizado.

@@ -110,7 +110,7 @@ print(primera_encriptacion)
 print()
 
 # Encontramos la letra más repetida en la frase original y sus posiciones.
-print("La letra que más se repetía en la frase original era:")
+print("La letra que más se repetía en la frase original es:")
 letra, frecuencia = letra_mas_repetida(frase)
 print(f"Letra: {letra}, Frecuencia: {frecuencia}")
 print("En las posiciones: " + str(posiciones_letra(frase, letra)))

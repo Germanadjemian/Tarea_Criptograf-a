@@ -1,129 +1,153 @@
 import unicodedata
 
-#Función para contar que tenga los 100 caracteres, lo imprime para visualizarlo.
+# Función para contar caracteres en un texto.
 def contar_caracteres(texto):
-    largo= len(texto)
-    print("Cantidad de caracteres: "+ str(largo))
-
-frase = "El esfuerzo y la dedicación son esenciales para alcanzar el éxito en cualquier campo profesional en la materia"
-print("Frase: "+frase)
-contar_caracteres(frase)#Da 110 caracateres
-
-#Funcion para eliminar tildes
-def eliminar_tildes(texto):
-    """Elimina tildes de una cadena utilizando unicodedata.
-
-    Args:
-        texto: La cadena de entrada.
-
-    Returns:
-        La cadena sin tildes.
     """
+    Calcula e imprime la cantidad de caracteres en el texto recibido.
+    """
+    # Calculamos el largo del texto usando len().
+    largo = len(texto)
+    # Imprimimos el resultado como un mensaje.
+    print("Cantidad de caracteres: " + str(largo))
 
-    return unicodedata.normalize('NFKD', texto).encode('ASCII', 'ignore').decode('ASCII')
+# Texto base para el análisis.
+frase = "El esfuerzo y la dedicación son esenciales para alcanzar el éxito en cualquier campo profesional en la materia"
+print("Frase: " + frase)
+# Llamamos a la función para contar caracteres en la frase.
+contar_caracteres(frase)
 
-#Funcion para convertir las letras a su respectivo número
+# Función para eliminar tildes de un texto.
+def eliminar_tildes(texto):
+    """
+    Normaliza el texto eliminando tildes o caracteres especiales usando unicodedata.
+    """
+    # Normalizamos el texto a formato 'NFKD' para separar caracteres acentuados.
+    texto_normalizado = unicodedata.normalize('NFKD', texto)
+    # Convertimos los caracteres acentuados a su forma base y eliminamos lo restante.
+    return texto_normalizado.encode('ASCII', 'ignore').decode('ASCII')
+
+# Función que convierte cada letra en un índice numérico según un alfabeto definido.
 def letra_numero(texto):
-    alfabeto = "abcdefghijklmnopqrstuvwxyzñ *"
-    lista= []
-    texto = eliminar_tildes(texto)
-    
-    for letra in texto:
-        letra = letra.lower()
+    """
+    Convierte cada letra del texto en su índice correspondiente en un alfabeto personalizado.
+    """
+    alfabeto = "abcdefghijklmnopqrstuvwxyzñ *"  # Alfabeto con caracteres adicionales.
+    lista = []
+    texto = eliminar_tildes(texto)  # Eliminamos tildes para evitar errores.
+
+    # Iteramos por cada letra en el texto transformado a minúsculas.
+    for letra in texto.lower():
+        # Verificamos si la letra está en el alfabeto.
         if letra in alfabeto:
+            # Añadimos su índice numérico a la lista.
             lista.append(alfabeto.index(letra))
         else:
-            return "Error, ingrese una frase valida"
-    return lista #devuelve lista de enteros
-        
-    
-#Funcion de encriptado (elegeimos a= 5 y b= 10)
-def encriptado_1(frase):
-    numeros = letra_numero(frase) #Convierto a=0, b=1, c=2.....
-    alfabeto = "abcdefghijklmnopqrstuvwxyzñ *"
-    lista = []
-    lista_2 = []
-    for numero in numeros:
-        imagen= (5 * numero + 10) % 29 #Aplico el algoritmo de encriptado
-        lista.append(imagen)
-   
-    for numero in lista:
-        lista_2.append(alfabeto[numero])#Para cada numero/imagen saliente del algoritmo agarro su equivalente en la tabla de conversión de letras a números pero al reves, esta vez de número a letra.
-    resultado = "".join(lista_2)
-    return resultado
+            # Si una letra no está en el alfabeto, devolvemos un mensaje de error.
+            return "Error, ingrese una frase válida"
+    return lista  # Retornamos la lista de índices.
 
-def letra_mas_repetida(texto):#Devuelve la letra más repetida y también las veces que esta se repite
-    contador = {}  # Diccionario para contar las letras y los espacios
+# Función para encriptar texto con una fórmula matemática.
+def encriptado_1(frase):
+    """
+    Aplica una fórmula matemática para encriptar un texto:
+    C = (5P + 10) mod 29, donde P es el índice de la letra en el alfabeto.
+    """
+    numeros = letra_numero(frase)  # Convertimos las letras a números.
+    alfabeto = "abcdefghijklmnopqrstuvwxyzñ *"  # Alfabeto usado para encriptar.
+    lista = []
+
+    # Iteramos sobre cada número en la lista obtenida.
+    for numero in numeros:
+        # Aplicamos la fórmula de encriptación.
+        imagen = (5 * numero + 10) % 29
+        # Guardamos el resultado en la lista de números encriptados.
+        lista.append(imagen)
     
+    # Convertimos los números en letras usando el alfabeto.
+    lista_2 = [alfabeto[numero] for numero in lista]
+    # Retornamos el texto encriptado como una cadena.
+    return "".join(lista_2)
+
+# Función para encontrar la letra más repetida en un texto.
+def letra_mas_repetida(texto):
+    """
+    Calcula qué letra aparece más veces en el texto, ignorando espacios y asteriscos.
+    """
+    contador = {}  # Diccionario para contar ocurrencias de cada letra.
+
+    # Iteramos por cada letra en el texto.
     for letra in texto:
-        if letra == " " or letra == "*": #Los esapcios en blanco y asteriscos no son letras, por lo que no los contamos
+        if letra == " " or letra == "*":  # Ignoramos espacios y asteriscos.
             continue
-        if letra in contador:
-            contador[letra] += 1
-        else:
-            contador[letra] = 1
-    
-    # Encontrar la letra o el espacio con la máxima frecuencia
+        # Incrementamos el conteo de la letra en el diccionario.
+        contador[letra] = contador.get(letra, 0) + 1
+
+    # Encontramos la letra con la mayor frecuencia.
     letra_mas_frecuente = max(contador, key=contador.get)
-    frecuencia = contador[letra_mas_frecuente]
+    frecuencia = contador[letra_mas_frecuente]  # Obtenemos su frecuencia.
     return letra_mas_frecuente, frecuencia
 
+# Función para encontrar las posiciones de una letra en una frase.
 def posiciones_letra(frase, letra):
-    lista = []
-    cont= 0
-    for caracter in frase:
-        if caracter == letra:
-            lista.append(cont)
-        cont+=1
-    return lista
+    """
+    Encuentra todas las posiciones en las que aparece una letra específica en la frase.
+    """
+    # Usamos una comprensión de lista para obtener los índices donde aparece la letra.
+    return [i for i, caracter in enumerate(frase) if caracter == letra]
 
-
-
-#Resultado de la concersión entre letras y números
-print("Estos son los números correspondientes para cada letra de la frase, de la primera a la última:")
+# Mostramos los índices numéricos de cada letra de la frase.
+print("Estos son los números correspondientes para cada letra de la frase:")
 print(letra_numero(frase))
 
-#Resultado del primero encriptado
-print("Al encriptar: '"+frase+"' obtengo:")
+# Encriptamos la frase y mostramos el resultado.
+print("Al encriptar: '" + frase + "' obtengo:")
 primera_encriptacion = encriptado_1(frase)
 print(primera_encriptacion)
 
 print()
 
+# Encontramos la letra más repetida en la frase original y sus posiciones.
 print("La letra que más se repetía en la frase original era:")
-print(letra_mas_repetida(frase))
-print("En las posiciones: " + str(posiciones_letra(frase, letra_mas_repetida(frase)[0])))
+letra, frecuencia = letra_mas_repetida(frase)
+print(f"Letra: {letra}, Frecuencia: {frecuencia}")
+print("En las posiciones: " + str(posiciones_letra(frase, letra)))
 
-#En un principio cambiaría la letra más repetida por su imagen correspondiente, pero manteniendo el número de veces que se repite y las posiciones. No obstante al no incluir los espacios (ni asteriscos) a la hora de contar la letra que más se repite, en el primero nos da que es "a" con 14 y en el segundo a con 17, este a con 17 son los espacios en blanco, presentes 17 veces en el texto, pero que anteriormente no los contaba porque no son una letra, pero como su imagen tras encriptar es a para todos, ahora si se cuentan.
+# Encontramos la letra más repetida tras la encriptación y sus posiciones.
+print("La letra que más se repite luego de encriptar la frase es:")
+letra_enc, frecuencia_enc = letra_mas_repetida(primera_encriptacion)
+print(f"Letra: {letra_enc}, Frecuencia: {frecuencia_enc}")
+print("En las posiciones: " + str(posiciones_letra(primera_encriptacion, letra_enc)))
 
-print("La letra que más se repite luego de encriptada la frase es:")
-print(letra_mas_repetida(primera_encriptacion))
-print("En las posiciones: " + str(posiciones_letra(primera_encriptacion, letra_mas_repetida(primera_encriptacion)[0])))
-
+# Función para desencriptar texto.
 def desencriptado_1(texto_encriptado):
+    """
+    Aplica la fórmula inversa para desencriptar:
+    P = a^-1 * (C - b) mod 29, donde a^-1 es el inverso modular de 5.
+    """
     alfabeto = "abcdefghijklmnopqrstuvwxyzñ *"
-    # Inverso de 'a' en módulo 29 (a=5, a^-1=6)
-    a_inverso = 6
-    b = 10 #definimos a_inverso y b para que en caso de elegir otros valores para a y b en un mismo planteo, este codigo pueda ser reutilizado simplemente sustituyendo sus respectivos valores
+    a_inverso = 6  # Inverso modular de 5 mod 29.
+    b = 10
     lista = []
-    #Como la cadena ya esta sanitizada al encriptarlo no necesito volver a hacerlo
+
+    # Iteramos sobre cada letra en el texto encriptado.
     for letra in texto_encriptado:
+        # Obtenemos el índice numérico de la letra en el alfabeto.
         numero_encriptado = alfabeto.index(letra)
-        # Desencriptamos con la fórmula P = a^-1 * (C - b) % 29
+        # Aplicamos la fórmula de desencriptación.
         numero_original = (a_inverso * (numero_encriptado - b)) % 29
+        # Convertimos el número de vuelta a una letra.
         lista.append(alfabeto[numero_original])
     
-    # Devolvemos el texto desencriptado
+    # Retornamos el texto desencriptado como una cadena.
     return ''.join(lista)
 
+# Desencriptamos y mostramos el texto original.
 print("Desencriptando nos queda:")
 print(desencriptado_1(primera_encriptacion))
 
-
+# Generamos equivalencias entre caracteres originales y encriptados (para esto encriptamos el alfabeto original y sabemos que las letras resultantes seran la imagen correspondiente a cada letra).
 alfabeto = "abcdefghijklmnopqrstuvwxyzñ *"
-print("La encriptación de cada caracter del alfabeto '" +alfabeto+"' corresponden respectivamente a cada una de las siguientes letras: ")
+print("La encriptación de cada caracter del alfabeto corresponde a:")
 alfabeto_encriptado = encriptado_1(alfabeto)
-alfabeto = list(alfabeto)
-alfabeto_encriptado = list(alfabeto_encriptado)
 equivalencias = dict(zip(alfabeto, alfabeto_encriptado))
 print(equivalencias.items())

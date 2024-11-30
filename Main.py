@@ -52,7 +52,7 @@ def encriptado_1(frase):
     Aplicamos una fórmula matemática para encriptar el texto (la transformación lineal que nos da la letra con los valores de a y b que nostros elegimos):
     C = (5P + 10) mod 29, donde P es el índice de la letra en el alfabeto.
     """
-    numeros = letra_numero(frase)  # Convertimos las letras a números.
+    numeros = letra_numero(frase)  # Convertimos las letras a números ( a=0, b=1, c=2...).
     alfabeto = "abcdefghijklmnopqrstuvwxyzñ *"  # Alfabeto usado para encriptar.
     lista = []
 

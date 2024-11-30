@@ -49,7 +49,7 @@ def letra_numero(texto):
 # Función para encriptar texto con una fórmula matemática.
 def encriptado_1(frase):
     """
-    Aplica una fórmula matemática para encriptar un texto:
+    Aplicamos una fórmula matemática para encriptar el texto (la transformación lineal que nos da la letra con los valores de a y b que nostros elegimos):
     C = (5P + 10) mod 29, donde P es el índice de la letra en el alfabeto.
     """
     numeros = letra_numero(frase)  # Convertimos las letras a números.
@@ -96,7 +96,7 @@ def posiciones_letra(frase, letra):
     return [i for i, caracter in enumerate(frase) if caracter == letra]
 
 # Mostramos los índices numéricos de cada letra de la frase.
-print("Estos son los números correspondientes para cada letra de la frase:")
+print("Estos son los números correspondientes para cada letra de la frase (cada uno de estos representa P en la ecuación):")
 print(letra_numero(frase))
 
 # Encriptamos la frase y mostramos el resultado.

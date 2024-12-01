@@ -47,7 +47,7 @@ def letra_numero(texto):
             return "Error, ingrese una frase válida"
     return lista  # Retornamos la lista de índices.
 
-# Función para encriptar texto con una fórmula matemática.
+# Función para encriptar texto con una fórmula matemática (la de la parte 1 de la letra).
 def encriptado_1(frase):
     """
     Aplicamos una fórmula matemática para encriptar el texto (la transformación lineal que nos da la letra con los valores de a y b que nostros elegimos):
@@ -288,3 +288,5 @@ print("\nVectores desencriptados:")
 for vector in vectores_desencriptados:
     print(f"[{', '.join(map(str, vector))}]")
 print("\nTexto desencriptado:", mensaje_desencriptado)
+
+
